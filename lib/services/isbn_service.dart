@@ -16,11 +16,13 @@ class IsbnService {
     // Basit map: title, authors (string), publishers, publish_date, pages, cover
     final title = book['title'] ?? '';
     final authors = (book['authors'] as List<dynamic>?)
-            ?.map((a) => a['name'] as String)
+            ?.map((a) => (a['name'] ?? '') as String)
+            .where((name) => name.isNotEmpty)
             .join(', ') ??
         '';
     final publishers = (book['publishers'] as List<dynamic>?)
-            ?.map((p) => p['name'] as String)
+            ?.map((p) => (p['name'] ?? '') as String)
+            .where((name) => name.isNotEmpty)
             .join(', ') ??
         '';
     final publishDate = book['publish_date'] ?? '';
