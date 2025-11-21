@@ -52,12 +52,14 @@ Kamera izni AndroidManifest.xml'de tanımlanmıştır:
 ```
 
 ### Bağımlılıklar
-- `provider`: State management
-- `sqflite`: SQLite veritabanı
-- `http`: HTTP istekleri (ISBN API)
-- `mobile_scanner`: Barkod/QR kod tarama
-- `uuid`: Benzersiz ID oluşturma
-- `path`: Dosya yolu yardımcıları
+- `provider` ^6.1.2: State management
+- `sqflite` ^2.3.3+1: SQLite veritabanı
+- `http` ^1.2.2: HTTP istekleri (ISBN API)
+- `mobile_scanner` ^5.2.3: Barkod/QR kod tarama
+- `uuid` ^4.5.1: Benzersiz ID oluşturma
+- `path` ^1.9.0: Dosya yolu yardımcıları
+- `cupertino_icons` ^1.0.8: iOS stil iconlar
+- `flutter_lints` ^5.0.0 (dev): Kod kalitesi analizi
 
 ### Proje Yapısı
 ```

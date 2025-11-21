@@ -44,7 +44,6 @@ class _AddBookPageState extends State<AddBookPage> {
       builder: (ctx) => SizedBox(
         height: 400,
         child: MobileScanner(
-          allowDuplicates: false,
           onDetect: (capture) async {
             final List<Barcode> barcodes = capture.barcodes;
             if (barcodes.isEmpty) return;
@@ -63,9 +62,11 @@ class _AddBookPageState extends State<AddBookPage> {
               });
             } else {
               // bulunamadı -> kullanıcı manuel düzenlesin
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('ISBN bilgisi bulunamadı.')),
-              );
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('ISBN bilgisi bulunamadı.')),
+                );
+              }
             }
           },
         ),
