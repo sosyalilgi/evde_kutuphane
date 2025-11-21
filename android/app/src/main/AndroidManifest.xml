@@ -17,6 +17,11 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- V2 embedding için önerilen meta-data (opsiyonel ama iyi olur) -->
+            <meta-data
+                android:name="flutterEmbedding"
+                android:value="2" />
         </activity>
     </application>
 </manifest>
