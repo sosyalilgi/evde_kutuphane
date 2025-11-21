@@ -21,6 +21,26 @@ class BookListPage extends StatelessWidget {
             tooltip: 'Yenile',
           )
         ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(56),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            child: TextField(
+              onChanged: prov.setQuery,
+              decoration: InputDecoration(
+                hintText: 'Kitap, yazar, etiket veya ISBN ara...',
+                prefixIcon: const Icon(Icons.search),
+                filled: true,
+                fillColor: Colors.white,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(24),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
       body: prov.books.isEmpty
           ? const Center(child: Text('Kayıtlı kitap yok. Yeni kitap ekleyin.'))
