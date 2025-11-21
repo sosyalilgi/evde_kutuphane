@@ -11,5 +11,6 @@ ios/Flutter/Flutter.podspec
 .gradle/
 .idea/
 android/.gradle/
+android/local.properties
 pubspec.lock
 .DS_Store
