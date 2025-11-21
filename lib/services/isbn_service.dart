@@ -14,20 +14,20 @@ class IsbnService {
     if (!data.containsKey(key)) return null;
     final book = data[key] as Map<String, dynamic>;
     // Basit map: title, authors (string), publishers, publish_date, pages, cover
-    final title = book['title'] ?? '';
+    final title = book['title']?.toString() ?? '';
     final authors = (book['authors'] as List<dynamic>?)
-            ?.map((a) => (a['name'] ?? '') as String)
+            ?.map((a) => a['name']?.toString() ?? '')
             .where((name) => name.isNotEmpty)
             .join(', ') ??
         '';
     final publishers = (book['publishers'] as List<dynamic>?)
-            ?.map((p) => (p['name'] ?? '') as String)
+            ?.map((p) => p['name']?.toString() ?? '')
             .where((name) => name.isNotEmpty)
             .join(', ') ??
         '';
-    final publishDate = book['publish_date'] ?? '';
-    final pages = book['number_of_pages'] ?? 0;
-    final cover = (book['cover'] != null) ? book['cover']['medium'] ?? '' : '';
+    final publishDate = book['publish_date']?.toString() ?? '';
+    final pages = book['number_of_pages'] as int? ?? 0;
+    final cover = (book['cover'] != null) ? book['cover']['medium']?.toString() ?? '' : '';
 
     return {
       'title': title,

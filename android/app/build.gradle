@@ -49,6 +49,8 @@ android {
 
     buildTypes {
         release {
+            // Note: For production, configure proper signing in android/key.properties
+            // or remove this line to use unsigned release configuration
             signingConfig signingConfigs.debug
         }
     }
