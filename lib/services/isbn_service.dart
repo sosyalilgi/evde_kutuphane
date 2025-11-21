@@ -6,11 +6,11 @@ class IsbnService {
   // Örnek: https://openlibrary.org/api/books?bibkeys=ISBN:0451526538&format=json&jscmd=data
   Future<Map<String, dynamic>?> fetchByIsbn(String isbn) async {
     final url =
-        'https://openlibrary.org/api/books?bibkeys=ISBN:\$isbn&format=json&jscmd=data';
+        'https://openlibrary.org/api/books?bibkeys=ISBN:$isbn&format=json&jscmd=data';
     final res = await http.get(Uri.parse(url));
     if (res.statusCode != 200) return null;
     final Map<String, dynamic> data = json.decode(res.body);
-    final key = 'ISBN:\$isbn';
+    final key = 'ISBN:$isbn';
     if (!data.containsKey(key)) return null;
     final book = data[key] as Map<String, dynamic>;
     // Basit map: title, authors (string), publishers, publish_date, pages, cover
