@@ -19,6 +19,8 @@ class _AddBookPageState extends State<AddBookPage> {
   final _isbnCtrl = TextEditingController();
   final _pagesCtrl = TextEditingController();
   final _locationCtrl = TextEditingController();
+  final _tagsCtrl = TextEditingController();
+  final _noteCtrl = TextEditingController();
   bool _scanning = false;
   final IsbnService _isbnService = IsbnService();
 
@@ -30,6 +32,8 @@ class _AddBookPageState extends State<AddBookPage> {
     _isbnCtrl.dispose();
     _pagesCtrl.dispose();
     _locationCtrl.dispose();
+    _tagsCtrl.dispose();
+    _noteCtrl.dispose();
     super.dispose();
   }
 
@@ -60,7 +64,7 @@ class _AddBookPageState extends State<AddBookPage> {
             } else {
               // bulunamadı -> kullanıcı manuel düzenlesin
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('ISBN bilgisi bulunamadı.')), 
+                const SnackBar(content: Text('ISBN bilgisi bulunamadı.')),
               );
             }
           },
@@ -74,9 +78,9 @@ class _AddBookPageState extends State<AddBookPage> {
   Widget build(BuildContext context) {
     final prov = Provider.of<BookProvider>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: const Text('Kitap Ekle')), 
+      appBar: AppBar(title: const Text('Kitap Ekle')),
       body: Padding(
-        padding: const EdgeInsets.all(12.0), 
+        padding: const EdgeInsets.all(12.0),
         child: Form(
           key: _formKey,
           child: ListView(
@@ -117,8 +121,20 @@ class _AddBookPageState extends State<AddBookPage> {
               ),
               TextFormField(
                 controller: _locationCtrl,
-                decoration:
-                    const InputDecoration(labelText: 'Raf / Konum (isteğe bağlı)'),
+                decoration: const InputDecoration(
+                    labelText: 'Raf / Konum (isteğe bağlı)'),
+              ),
+              TextFormField(
+                controller: _tagsCtrl,
+                decoration: const InputDecoration(
+                  labelText:
+                      'Etiketler (virgülle ayırın, örn: roman, kişisel gelişim)',
+                ),
+              ),
+              TextFormField(
+                controller: _noteCtrl,
+                decoration: const InputDecoration(labelText: 'Not'),
+                maxLines: 3,
               ),
               const SizedBox(height: 12),
               ElevatedButton(
@@ -133,6 +149,8 @@ class _AddBookPageState extends State<AddBookPage> {
                     pageCount:
                         int.tryParse(_pagesCtrl.text.replaceAll(',', '')) ?? 0,
                     location: _locationCtrl.text,
+                    tags: _tagsCtrl.text,
+                    note: _noteCtrl.text,
                   );
                   Navigator.pop(context);
                 },
