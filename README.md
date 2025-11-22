@@ -1,6 +1,6 @@
-# Evde Kütüphane - Flutter MVP (Android)
+# Evde Kütüphane - Flutter MVP (Android) + Web Arayüzü
 
-Basit bir Android uygulaması için Flutter tabanlı MVP iskeleti. Özellikler:
+Basit bir Android uygulaması için Flutter tabanlı MVP iskeleti ve alternatif web arayüzü. Özellikler:
 - Kitap ekleme (manuel + barkod/ISBN tarama)
 - Kitap listesi, detay, arama
 - Lokal veritabanı: sqflite (SQLite)
@@ -8,7 +8,21 @@ Basit bir Android uygulaması için Flutter tabanlı MVP iskeleti. Özellikler:
 - Barkod tarama: mobile_scanner (kamera)
 - Türkçe arayüz
 
-## Gereksinimler
+## İki Kullanım Seçeneği
+
+Bu proje iki farklı şekilde kullanılabilir:
+
+### 1. Flutter Android Uygulaması (Ana Proje)
+Mobil cihazlar için Flutter tabanlı Android uygulaması
+
+### 2. Web Arayüzü (Alternatif)
+Masaüstü ve mobil tarayıcılar için Node.js/Express tabanlı web uygulaması
+
+---
+
+## Flutter Android Uygulaması
+
+### Gereksinimler
 - Flutter SDK 3.0.0 veya üzeri
 - Android SDK (API 21+)
 - Kotlin desteği
@@ -99,3 +113,128 @@ lib/
 - Bulut senkronizasyonu için Firebase (Authentication + Firestore) eklenebilir.
 - ISBN bilgisi Open Library'den çekilir; sonuç bulunamazsa manuel düzenleme yapılabilir.
 - Kamera izni kullanıcı tarafından manuel olarak verilmelidir.
+
+---
+
+## Web Arayüzü (Alternatif Kullanım)
+
+Web arayüzü, masaüstü ve mobil tarayıcılar için basit bir kitap ekleme arayüzü sağlar.
+
+### Özellikler
+- ✅ Modern ve responsive Bootstrap 5 arayüzü
+- ✅ Kitap ekleme formu (başlık, yazar, yayınevi, ISBN, vb.)
+- ✅ JSON tabanlı veri depolama (data/books.json)
+- ✅ Express.js backend API
+- ✅ Gerçek zamanlı form doğrulama
+- ✅ Başarı/hata mesajları
+
+### Gereksinimler
+- Node.js 14.0.0 veya üzeri
+- npm (Node Package Manager)
+
+### Kurulum ve Çalıştırma
+
+1. **Bağımlılıkları yükleyin**:
+   ```bash
+   npm install
+   ```
+
+2. **Web sunucusunu başlatın**:
+   ```bash
+   npm start
+   ```
+
+3. **Tarayıcıda açın**:
+   ```
+   http://localhost:3000
+   ```
+
+### API Endpoint'leri
+
+#### POST /api/save
+Yeni kitap ekler.
+
+**Request Body**:
+```json
+{
+  "title": "Kitap Başlığı",
+  "author": "Yazar Adı",
+  "publisher": "Yayınevi",
+  "isbn": "978-xxx",
+  "pageCount": 250,
+  "location": "Raf 1",
+  "tags": "roman, kurgu",
+  "note": "Notlar"
+}
+```
+
+**Response (Başarılı)**:
+```json
+{
+  "success": true,
+  "message": "Kitap başarıyla kaydedildi",
+  "book": { ... }
+}
+```
+
+#### GET /api/books
+Tüm kitapları listeler.
+
+**Response**:
+```json
+{
+  "success": true,
+  "books": [ ... ]
+}
+```
+
+### Dosya Yapısı
+
+```
+.
+├── public/              # Frontend dosyaları
+│   ├── index.html       # Ana sayfa
+│   ├── css/
+│   │   └── style.css    # Özel stiller
+│   └── js/
+│       └── save.js      # Form işlemleri ve API çağrıları
+├── server/              # Backend
+│   └── server.js        # Express sunucu
+├── data/                # Veri depolama
+│   └── books.json       # Kitap verileri (JSON)
+├── package.json         # Node.js bağımlılıkları
+└── README.md           # Bu dosya
+```
+
+### Veri Depolama
+
+Kitaplar `data/books.json` dosyasında saklanır. Bu dosya sunucu ilk çalıştırıldığında otomatik olarak oluşturulur. 
+
+**Örnek veri formatı**:
+```json
+[
+  {
+    "id": "unique-id",
+    "title": "Örnek Kitap",
+    "author": "Yazar Adı",
+    "publisher": "Yayınevi",
+    "isbn": "978-xxx",
+    "pageCount": 250,
+    "location": "Raf 1",
+    "tags": "roman, kurgu",
+    "note": "Notlar",
+    "createdAt": "2024-01-01T00:00:00.000Z"
+  }
+]
+```
+
+### Production Notları
+
+⚠️ **Önemli**: Bu web arayüzü demo amaçlıdır ve JSON dosya tabanlı basit depolama kullanır.
+
+Production ortamı için öneriler:
+- SQLite, PostgreSQL veya MySQL gibi bir veritabanı kullanın
+- Kimlik doğrulama ekleyin
+- HTTPS kullanın
+- Rate limiting ve güvenlik önlemleri ekleyin
+- Dosya yükleme boyut limitleri belirleyin

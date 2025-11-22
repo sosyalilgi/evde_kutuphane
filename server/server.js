@@ -1,0 +1,159 @@
+const express = require('express');
+const fs = require('fs').promises;
+const path = require('path');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+const DATA_FILE = path.join(__dirname, '../data/books.json');
+
+// Middleware
+app.use(express.json());
+app.use(express.static(path.join(__dirname, '../public')));
+
+// Ensure data directory and file exist
+async function ensureDataFile() {
+    try {
+        const dataDir = path.dirname(DATA_FILE);
+        await fs.mkdir(dataDir, { recursive: true });
+        
+        try {
+            await fs.access(DATA_FILE);
+        } catch {
+            // File doesn't exist, create it with empty array
+            await fs.writeFile(DATA_FILE, JSON.stringify([], null, 2), 'utf-8');
+            console.log('Created data/books.json');
+        }
+    } catch (error) {
+        console.error('Error ensuring data file:', error);
+        throw error;
+    }
+}
+
+// Read books from JSON file
+// NOTE: For production use, implement file locking or use a proper database
+// to handle concurrent read/write operations safely
+async function readBooks() {
+    try {
+        const data = await fs.readFile(DATA_FILE, 'utf-8');
+        return JSON.parse(data);
+    } catch (error) {
+        console.error('Error reading books:', error);
+        return [];
+    }
+}
+
+// Write books to JSON file
+async function writeBooks(books) {
+    try {
+        await fs.writeFile(DATA_FILE, JSON.stringify(books, null, 2), 'utf-8');
+    } catch (error) {
+        console.error('Error writing books:', error);
+        throw error;
+    }
+}
+
+// API Routes
+
+// GET /api/books - Get all books
+app.get('/api/books', async (req, res) => {
+    try {
+        const books = await readBooks();
+        res.json({ success: true, books });
+    } catch (error) {
+        res.status(500).json({ success: false, error: 'Kitaplar okunamadı' });
+    }
+});
+
+// POST /api/save - Save a new book
+app.post('/api/save', async (req, res) => {
+    try {
+        const { title, author, publisher, isbn, pageCount, location, tags, note, createdAt } = req.body;
+        
+        // Validation
+        if (!title || title.trim() === '') {
+            return res.status(400).json({ 
+                success: false, 
+                error: 'Başlık gereklidir' 
+            });
+        }
+        
+        // Validate title length
+        if (title.trim().length > 500) {
+            return res.status(400).json({
+                success: false,
+                error: 'Başlık çok uzun (maksimum 500 karakter)'
+            });
+        }
+        
+        // Validate pageCount
+        if (pageCount !== undefined && pageCount !== null && pageCount !== '') {
+            const count = parseInt(pageCount, 10);
+            if (isNaN(count) || count < 0 || count > 100000) {
+                return res.status(400).json({
+                    success: false,
+                    error: 'Sayfa sayısı geçerli değil (0-100000 arası olmalı)'
+                });
+            }
+        }
+        
+        // Read existing books
+        const books = await readBooks();
+        
+        // Create new book object with unique ID
+        const newBook = {
+            id: generateId(),
+            title: title.trim().substring(0, 500),
+            author: (author || '').substring(0, 500),
+            publisher: (publisher || '').substring(0, 500),
+            isbn: (isbn || '').substring(0, 50),
+            pageCount: Math.max(0, Math.min(100000, Number.parseInt(pageCount, 10) || 0)),
+            location: (location || '').substring(0, 200),
+            tags: (tags || '').substring(0, 500),
+            note: (note || '').substring(0, 2000),
+            createdAt: createdAt || new Date().toISOString()
+        };
+        
+        // Add to beginning of array
+        books.unshift(newBook);
+        
+        // Save to file
+        await writeBooks(books);
+        
+        res.json({ 
+            success: true, 
+            message: 'Kitap başarıyla kaydedildi',
+            book: newBook
+        });
+    } catch (error) {
+        console.error('Error saving book:', error);
+        res.status(500).json({ 
+            success: false, 
+            error: 'Kitap kaydedilemedi: ' + error.message 
+        });
+    }
+});
+
+// Helper function to generate unique ID
+// NOTE: For production use, consider using crypto.randomUUID() or uuid package
+// for guaranteed uniqueness in high-concurrency scenarios
+function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substring(2, 11);
+}
+
+// Start server
+async function startServer() {
+    try {
+        await ensureDataFile();
+        app.listen(PORT, () => {
+            console.log(`\n🚀 Evde Kütüphane web server çalışıyor!`);
+            console.log(`📍 URL: http://localhost:${PORT}`);
+            console.log(`📁 Veri dosyası: ${DATA_FILE}`);
+            console.log(`\nKullanım: Tarayıcıda http://localhost:${PORT} adresini açın\n`);
+        });
+    } catch (error) {
+        console.error('Server başlatılamadı:', error);
+        process.exit(1);
+    }
+}
+
+startServer();

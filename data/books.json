@@ -1,0 +1,74 @@
+[
+  {
+    "id": "miath1gku2uenr5aa",
+    "title": "Final Test Book",
+    "author": "",
+    "publisher": "",
+    "isbn": "",
+    "pageCount": 0,
+    "location": "",
+    "tags": "",
+    "note": "",
+    "createdAt": "2025-11-22T21:44:17.824Z"
+  },
+  {
+    "id": "miatgfrfiqdj3a02c",
+    "title": "Test",
+    "author": "",
+    "publisher": "",
+    "isbn": "",
+    "pageCount": 0,
+    "location": "",
+    "tags": "",
+    "note": "",
+    "createdAt": "2025-11-22T21:43:49.707Z"
+  },
+  {
+    "id": "miatbfgvjewvzqyw3",
+    "title": "Sefiller",
+    "author": "Victor Hugo",
+    "publisher": "Can Yayınları",
+    "isbn": "",
+    "pageCount": 1463,
+    "location": "",
+    "tags": "klasik, edebiyat, roman",
+    "note": "",
+    "createdAt": "2025-11-22T21:39:56.034Z"
+  },
+  {
+    "id": "miat7ehk77fhfcr00",
+    "title": "Test Book",
+    "author": "",
+    "publisher": "",
+    "isbn": "",
+    "pageCount": 150,
+    "location": "",
+    "tags": "",
+    "note": "",
+    "createdAt": "2025-11-22T21:36:48.152Z"
+  },
+  {
+    "id": "miat3tvpyb654j3vr",
+    "title": "1984",
+    "author": "George Orwell",
+    "publisher": "",
+    "isbn": "",
+    "pageCount": 0,
+    "location": "",
+    "tags": "",
+    "note": "",
+    "createdAt": "2025-11-22T21:34:01.464Z"
+  },
+  {
+    "id": "miaszk4mmj3bzissf",
+    "title": "Suç ve Ceza",
+    "author": "Fyodor Dostoyevski",
+    "publisher": "İş Bankası Yayınları",
+    "isbn": "978-9944882605",
+    "pageCount": 704,
+    "location": "Salon - Raf 3",
+    "tags": "klasik, roman, edebiyat",
+    "note": "Rus edebiyatının en önemli eserlerinden biri",
+    "createdAt": "2025-11-22T21:30:42.177Z"
+  }
+]
