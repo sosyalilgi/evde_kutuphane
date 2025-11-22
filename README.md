@@ -38,6 +38,16 @@ Modern, responsive bir web arayüzü ile kitap yönetimi.
 - ✅ Kalıcı JSON depolama (data/books.json)
 - ✅ RESTful API (/api/save, /api/books)
 
+### Güvenlik Notları
+
+⚠️ **Önemli**: Bu web arayüzü basit bir örnek/MVP uygulamasıdır. Üretim ortamında kullanılacaksa aşağıdaki güvenlik iyileştirmeleri yapılmalıdır:
+
+- Rate limiting (API isteklerini sınırlandırma) eklenmeli
+- Authentication/Authorization (kimlik doğrulama/yetkilendirme) sistemi eklenme li
+- HTTPS kullanılmalı
+- Input sanitization güçlendirilmeli
+- CORS politikaları yapılandırılmalı
+
 ### Proje Yapısı (Web)
 
 ```
