@@ -3,6 +3,7 @@
 const express = require('express');
 const fs = require('fs').promises;
 const path = require('path');
+const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -50,7 +51,7 @@ app.post('/api/save', async (req, res) => {
 
         // Create new book object
         const newBook = {
-            id: Date.now().toString(),
+            id: crypto.randomUUID(),
             title: title.trim(),
             author: author.trim(),
             notes: notes ? notes.trim() : '',

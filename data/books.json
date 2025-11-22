@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": "1763847103190",
+    "title": "Suç ve Ceza",
+    "author": "Fyodor Dostoyevski",
+    "notes": "Klasik bir eser",
+    "createdAt": "2025-11-22T21:31:43.190Z"
+  },
+  {
+    "id": "1763847167541",
+    "title": "1984",
+    "author": "George Orwell",
+    "notes": "Distopik bir roman",
+    "createdAt": "2025-11-22T21:32:47.541Z"
+  },
+  {
+    "id": "055af50c-57a5-46af-b429-588a7f9c8e10",
+    "title": "Test Book",
+    "author": "Test Author",
+    "notes": "Testing UUID",
+    "createdAt": "2025-11-22T21:34:50.076Z"
+  }
+]
