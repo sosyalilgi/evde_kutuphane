@@ -21,7 +21,7 @@ document.getElementById('bookForm').addEventListener('submit', async (e) => {
         author: document.getElementById('author').value.trim(),
         publisher: document.getElementById('publisher').value.trim(),
         isbn: document.getElementById('isbn').value.trim(),
-        pageCount: parseInt(document.getElementById('pageCount').value) || 0,
+        pageCount: Math.max(0, parseInt(document.getElementById('pageCount').value) || 0),
         location: document.getElementById('location').value.trim(),
         tags: document.getElementById('tags').value.trim(),
         note: document.getElementById('note').value.trim(),

@@ -30,6 +30,8 @@ async function ensureDataFile() {
 }
 
 // Read books from JSON file
+// NOTE: For production use, implement file locking or use a proper database
+// to handle concurrent read/write operations safely
 async function readBooks() {
     try {
         const data = await fs.readFile(DATA_FILE, 'utf-8');
@@ -75,20 +77,36 @@ app.post('/api/save', async (req, res) => {
             });
         }
         
+        // Validate title length
+        if (title.trim().length > 500) {
+            return res.status(400).json({
+                success: false,
+                error: 'Başlık çok uzun (maksimum 500 karakter)'
+            });
+        }
+        
+        // Validate pageCount
+        if (pageCount && (pageCount < 0 || pageCount > 100000)) {
+            return res.status(400).json({
+                success: false,
+                error: 'Sayfa sayısı geçerli değil (0-100000 arası olmalı)'
+            });
+        }
+        
         // Read existing books
         const books = await readBooks();
         
         // Create new book object with unique ID
         const newBook = {
             id: generateId(),
-            title: title.trim(),
-            author: author || '',
-            publisher: publisher || '',
-            isbn: isbn || '',
-            pageCount: pageCount || 0,
-            location: location || '',
-            tags: tags || '',
-            note: note || '',
+            title: title.trim().substring(0, 500),
+            author: (author || '').substring(0, 500),
+            publisher: (publisher || '').substring(0, 500),
+            isbn: (isbn || '').substring(0, 50),
+            pageCount: Math.max(0, Math.min(100000, parseInt(pageCount) || 0)),
+            location: (location || '').substring(0, 200),
+            tags: (tags || '').substring(0, 500),
+            note: (note || '').substring(0, 2000),
             createdAt: createdAt || new Date().toISOString()
         };
         
@@ -113,6 +131,8 @@ app.post('/api/save', async (req, res) => {
 });
 
 // Helper function to generate unique ID
+// NOTE: For production use, consider using crypto.randomUUID() or uuid package
+// for guaranteed uniqueness in high-concurrency scenarios
 function generateId() {
     return Date.now().toString(36) + Math.random().toString(36).substring(2, 11);
 }
