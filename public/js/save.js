@@ -16,12 +16,15 @@ document.getElementById('bookForm').addEventListener('submit', async (e) => {
     btnSpinner.classList.remove('d-none');
     
     // Collect form data
+    const pageCountValue = document.getElementById('pageCount').value;
+    const pageCountInt = pageCountValue ? Number.parseInt(pageCountValue, 10) : 0;
+    
     const formData = {
         title: document.getElementById('title').value.trim(),
         author: document.getElementById('author').value.trim(),
         publisher: document.getElementById('publisher').value.trim(),
         isbn: document.getElementById('isbn').value.trim(),
-        pageCount: Math.max(0, parseInt(document.getElementById('pageCount').value) || 0),
+        pageCount: Math.max(0, isNaN(pageCountInt) ? 0 : pageCountInt),
         location: document.getElementById('location').value.trim(),
         tags: document.getElementById('tags').value.trim(),
         note: document.getElementById('note').value.trim(),

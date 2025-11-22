@@ -86,11 +86,14 @@ app.post('/api/save', async (req, res) => {
         }
         
         // Validate pageCount
-        if (pageCount && (pageCount < 0 || pageCount > 100000)) {
-            return res.status(400).json({
-                success: false,
-                error: 'Sayfa sayısı geçerli değil (0-100000 arası olmalı)'
-            });
+        if (pageCount !== undefined && pageCount !== null && pageCount !== '') {
+            const count = parseInt(pageCount, 10);
+            if (isNaN(count) || count < 0 || count > 100000) {
+                return res.status(400).json({
+                    success: false,
+                    error: 'Sayfa sayısı geçerli değil (0-100000 arası olmalı)'
+                });
+            }
         }
         
         // Read existing books
@@ -103,7 +106,7 @@ app.post('/api/save', async (req, res) => {
             author: (author || '').substring(0, 500),
             publisher: (publisher || '').substring(0, 500),
             isbn: (isbn || '').substring(0, 50),
-            pageCount: Math.max(0, Math.min(100000, parseInt(pageCount) || 0)),
+            pageCount: Math.max(0, Math.min(100000, Number.parseInt(pageCount, 10) || 0)),
             location: (location || '').substring(0, 200),
             tags: (tags || '').substring(0, 500),
             note: (note || '').substring(0, 2000),
