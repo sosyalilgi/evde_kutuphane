@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evde Kütüphane - Kitap Ekle</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-sm mt-5">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4">
+                            <i class="bi bi-book"></i> Kitap Ekle
+                        </h1>
+                        
+                        <!-- Alert placeholder -->
+                        <div id="alertPlaceholder"></div>
+                        
+                        <form id="bookForm">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Kitap Başlığı *</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="title" 
+                                    name="title" 
+                                    required
+                                    placeholder="Örn: Suç ve Ceza">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="author" class="form-label">Yazar *</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="author" 
+                                    name="author" 
+                                    required
+                                    placeholder="Örn: Fyodor Dostoyevski">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="notes" class="form-label">Notlar</label>
+                                <textarea 
+                                    class="form-control" 
+                                    id="notes" 
+                                    name="notes" 
+                                    rows="3"
+                                    placeholder="Kitap hakkında notlarınız..."></textarea>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary" id="saveBtn">
+                                    <span id="btnText">Kaydet</span>
+                                    <span id="btnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-3 text-muted">
+                    <small>Evde Kütüphane v1.0</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="/js/save.js"></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-# Evde Kütüphane - Flutter MVP (Android)
+# Evde Kütüphane - Flutter MVP (Android) + Web Arayüzü
 
 Basit bir Android uygulaması için Flutter tabanlı MVP iskeleti. Özellikler:
 - Kitap ekleme (manuel + barkod/ISBN tarama)
@@ -8,12 +8,22 @@ Basit bir Android uygulaması için Flutter tabanlı MVP iskeleti. Özellikler:
 - Barkod tarama: mobile_scanner (kamera)
 - Türkçe arayüz
 
+**YENİ:** Web tabanlı kitap ekleme arayüzü (Node.js + Express)
+
 ## Gereksinimler
+
+### Flutter App (Android)
 - Flutter SDK 3.0.0 veya üzeri
 - Android SDK (API 21+)
 - Kotlin desteği
 
+### Web Arayüzü (Node.js)
+- Node.js 14.0.0 veya üzeri
+- npm veya yarn
+
 ## Kurulum
+
+### Flutter App Kurulumu
 
 1. **Flutter SDK kurulumu**: Flutter SDK'nın kurulu olduğundan emin olun.
    ```bash
@@ -35,7 +45,50 @@ Basit bir Android uygulaması için Flutter tabanlı MVP iskeleti. Özellikler:
    flutter build apk
    ```
 
+### Web Arayüzü Kurulumu
+
+1. **Bağımlılıkları yükleyin**:
+   ```bash
+   npm install
+   ```
+
+2. **Sunucuyu başlatın**:
+   ```bash
+   npm start
+   ```
+
+3. **Tarayıcınızda açın**:
+   ```
+   http://localhost:3000
+   ```
+
+4. **Kitap ekleyin**: Formu doldurup "Kaydet" butonuna tıklayın. Kitaplar `data/books.json` dosyasına kaydedilir.
+
 ## Teknik Detaylar
+
+### Web Arayüzü
+- **Backend**: Node.js + Express
+- **Frontend**: Bootstrap 5 (responsive)
+- **Veri Depolama**: JSON dosyası (`data/books.json`)
+- **API Endpoints**:
+  - `POST /api/save` - Kitap kaydetme
+  - `GET /api/books` - Tüm kitapları listeleme
+
+### Proje Yapısı (Web)
+```
+public/
+├── index.html          # Ana sayfa (kitap ekleme formu)
+├── css/
+│   └── style.css       # Özel stiller
+└── js/
+    └── save.js         # Form işleme ve API çağrıları
+
+server/
+└── server.js           # Express sunucu
+
+data/
+└── books.json          # Kitap verileri (JSON)
+```
 
 ### Android Yapılandırması
 - **Android Embedding**: V2 (FlutterActivity)
@@ -96,6 +149,8 @@ lib/
 - Tarama sonrası otomatik bilgi çekme
 
 ## Notlar
+- **Web arayüzü**: Bağımsız bir Node.js sunucusu olarak çalışır ve Flutter uygulamasından ayrıdır.
+- **Veri Depolama**: Web arayüzünde eklenen kitaplar `data/books.json` dosyasına kaydedilir.
 - Bulut senkronizasyonu için Firebase (Authentication + Firestore) eklenebilir.
 - ISBN bilgisi Open Library'den çekilir; sonuç bulunamazsa manuel düzenleme yapılabilir.
 - Kamera izni kullanıcı tarafından manuel olarak verilmelidir.
