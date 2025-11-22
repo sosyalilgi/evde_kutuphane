@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs').promises;
 const path = require('path');
+const crypto = require('crypto');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,6 +23,22 @@ async function ensureDataFile() {
     }
 }
 
+// Read books from file with error handling
+async function readBooksFromFile() {
+    try {
+        const data = await fs.readFile(DATA_FILE, 'utf8');
+        const books = JSON.parse(data);
+        if (!Array.isArray(books)) {
+            console.error('Invalid data structure in books.json, resetting to empty array');
+            return [];
+        }
+        return books;
+    } catch (parseError) {
+        console.error('Error reading books.json:', parseError.message);
+        return [];
+    }
+}
+
 // POST /api/save - Save a new book
 app.post('/api/save', async (req, res) => {
     try {
@@ -35,12 +52,11 @@ app.post('/api/save', async (req, res) => {
         }
 
         // Read existing books
-        const data = await fs.readFile(DATA_FILE, 'utf8');
-        const books = JSON.parse(data);
+        const books = await readBooksFromFile();
 
         // Create new book entry
         const newBook = {
-            id: Date.now().toString(),
+            id: crypto.randomUUID(),
             title: title.trim(),
             author: author.trim(),
             notes: notes ? notes.trim() : '',
@@ -71,8 +87,7 @@ app.post('/api/save', async (req, res) => {
 // GET /api/books - Get all books (optional, for future use)
 app.get('/api/books', async (req, res) => {
     try {
-        const data = await fs.readFile(DATA_FILE, 'utf8');
-        const books = JSON.parse(data);
+        const books = await readBooksFromFile();
         res.json(books);
     } catch (error) {
         console.error('Error reading books:', error);

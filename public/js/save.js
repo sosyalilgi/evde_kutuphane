@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Auto-dismiss after 5 seconds
         setTimeout(() => {
             const alert = alertPlaceholder.querySelector('.alert');
-            if (alert) {
+            if (alert && typeof bootstrap !== 'undefined') {
                 const bsAlert = new bootstrap.Alert(alert);
                 bsAlert.close();
             }
@@ -47,8 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const bookData = {
             title: formData.get('title'),
             author: formData.get('author'),
-            notes: formData.get('notes') || '',
-            createdAt: new Date().toISOString()
+            notes: formData.get('notes') || ''
         };
 
         // Set loading state
