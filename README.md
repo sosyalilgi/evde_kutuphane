@@ -1,4 +1,62 @@
-# Evde Kütüphane - Flutter MVP (Android)
+# Evde Kütüphane
+
+Bu proje hem **Flutter mobil uygulama** hem de **Web arayüzü** içerir.
+
+## 🌐 Web Arayüzü (Node.js/Express)
+
+Modern, responsive bir web arayüzü ile kitap yönetimi.
+
+### Kurulum ve Çalıştırma
+
+1. **Node.js kurulumu**: Node.js 14.0.0 veya üzeri gereklidir.
+   ```bash
+   node --version
+   ```
+
+2. **Bağımlılıkları yükleyin**:
+   ```bash
+   npm install
+   ```
+
+3. **Sunucuyu başlatın**:
+   ```bash
+   npm start
+   ```
+
+4. **Tarayıcıda açın**:
+   ```
+   http://localhost:3000
+   ```
+
+### Web Arayüzü Özellikleri
+
+- ✅ Bootstrap 5 ile modern, responsive tasarım
+- ✅ Kitap ekleme formu (başlık, yazar, notlar)
+- ✅ Gerçek zamanlı form validasyonu
+- ✅ Loading state gösterimi
+- ✅ Başarı/hata bildirimleri
+- ✅ Kalıcı JSON depolama (data/books.json)
+- ✅ RESTful API (/api/save, /api/books)
+
+### Proje Yapısı (Web)
+
+```
+public/                    # Web arayüzü dosyaları
+├── index.html            # Ana sayfa (kitap ekleme formu)
+├── css/
+│   └── style.css         # Modern stil dosyası
+└── js/
+    └── save.js           # Form işleme ve API iletişimi
+server/
+└── server.js             # Express sunucusu
+data/
+└── books.json            # Kitap veritabanı (JSON)
+package.json              # Node.js bağımlılıkları
+```
+
+---
+
+## 📱 Flutter Mobil Uygulama (Android)
 
 Basit bir Android uygulaması için Flutter tabanlı MVP iskeleti. Özellikler:
 - Kitap ekleme (manuel + barkod/ISBN tarama)
@@ -8,12 +66,12 @@ Basit bir Android uygulaması için Flutter tabanlı MVP iskeleti. Özellikler:
 - Barkod tarama: mobile_scanner (kamera)
 - Türkçe arayüz
 
-## Gereksinimler
+### Gereksinimler
 - Flutter SDK 3.0.0 veya üzeri
 - Android SDK (API 21+)
 - Kotlin desteği
 
-## Kurulum
+### Kurulum
 
 1. **Flutter SDK kurulumu**: Flutter SDK'nın kurulu olduğundan emin olun.
    ```bash
@@ -35,7 +93,7 @@ Basit bir Android uygulaması için Flutter tabanlı MVP iskeleti. Özellikler:
    flutter build apk
    ```
 
-## Teknik Detaylar
+### Teknik Detaylar
 
 ### Android Yapılandırması
 - **Android Embedding**: V2 (FlutterActivity)
@@ -78,7 +136,7 @@ lib/
     └── isbn_service.dart      # Open Library API servisi
 ```
 
-## Özellikler
+### Özellikler
 
 ### Kitap Yönetimi
 - ✅ Kitap ekleme (manuel ve barkod ile)
@@ -95,7 +153,7 @@ lib/
 - mobile_scanner ile barkod/ISBN tarama
 - Tarama sonrası otomatik bilgi çekme
 
-## Notlar
+### Notlar
 - Bulut senkronizasyonu için Firebase (Authentication + Firestore) eklenebilir.
 - ISBN bilgisi Open Library'den çekilir; sonuç bulunamazsa manuel düzenleme yapılabilir.
 - Kamera izni kullanıcı tarafından manuel olarak verilmelidir.
