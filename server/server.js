@@ -114,7 +114,7 @@ app.post('/api/save', async (req, res) => {
 
 // Helper function to generate unique ID
 function generateId() {
-    return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+    return Date.now().toString(36) + Math.random().toString(36).substring(2, 11);
 }
 
 // Start server

@@ -66,12 +66,25 @@ document.getElementById('bookForm').addEventListener('submit', async (e) => {
 function showAlert(type, message) {
     const alertPlaceholder = document.getElementById('alertPlaceholder');
     const wrapper = document.createElement('div');
-    wrapper.innerHTML = `
-        <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    `;
+    
+    // Create alert element safely
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.setAttribute('role', 'alert');
+    
+    // Use textContent to prevent XSS
+    const messageText = document.createTextNode(message);
+    alertDiv.appendChild(messageText);
+    
+    // Add close button
+    const closeButton = document.createElement('button');
+    closeButton.type = 'button';
+    closeButton.className = 'btn-close';
+    closeButton.setAttribute('data-bs-dismiss', 'alert');
+    closeButton.setAttribute('aria-label', 'Close');
+    alertDiv.appendChild(closeButton);
+    
+    wrapper.appendChild(alertDiv);
     alertPlaceholder.appendChild(wrapper);
     
     // Auto-dismiss success alerts after 5 seconds
